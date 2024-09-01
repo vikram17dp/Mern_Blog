@@ -1,9 +1,11 @@
+import { Button } from 'flowbite-react'
 import React from 'react'
 
 function Home() {
   return (
     <div>
-      Home
+      
+      home
     </div>
   )
 }
