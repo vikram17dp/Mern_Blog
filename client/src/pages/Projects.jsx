@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Signin() {
+function Projects() {
   return (
     <div>
-      Signin
+      Projects
     </div>
   )
 }
 
-export default Signin
+export default Projects
