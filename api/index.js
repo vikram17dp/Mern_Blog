@@ -3,11 +3,13 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "../api/routes/auth.route.js";
+import cors from 'cors'
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
@@ -16,8 +18,8 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-app.listen(3000, (req, res) => {
-  console.log(`server is running on port 3000!`);
+app.listen(5000, (req, res) => {
+  console.log(`server is running on port 5000!`);
 });
 
 app.use("/api/user", userRoutes);
