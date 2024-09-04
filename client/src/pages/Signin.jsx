@@ -1,14 +1,16 @@
 import { Button, Label, TextInput } from 'flowbite-react';
 import React, { useState } from 'react'
+import { useDispatch ,useSelector} from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-
-
+import { SignInStart,SignInSuccess,SignInFailure } from '../redux/user/userSlice';
 
 function Signin() {
-  const [loading,setLoading] = useState(false);
-  const [errormessage,setErrormessage] = useState(null);
+  // const [loading,setLoading] = useState(false);
+  // const [errormessage,setErrormessage] = useState(null);
   const [formdata,setFormdata] = useState({});
+  const {loading,error:errormessage} = useSelector(state => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handlechange = (e)=>{
     setFormdata({ ...formdata, [e.target.id]: e.target.value.trim() });
@@ -18,11 +20,12 @@ function Signin() {
     e.preventDefault();
 
     if(!formdata.email || !formdata.password){
-      return setErrormessage("please fill all fileds!")
-    }
+      return dispatch(SignInFailure("please fill all fileds!"))
+  }
     try {
-      setLoading(true);
-      setErrormessage(null);
+      // setLoading(true);
+      // setErrormessage(null);
+      dispatch(SignInStart());
       const res = await fetch("/api/auth/signin",{
         method:"POST",
         headers: { "Content-Type": "application/json" },
@@ -31,14 +34,18 @@ function Signin() {
       });
       const data = await res.json();
       if(data.success == false){
-        setLoading(false); 
-        return setErrormessage(data.message)
+        // setLoading(false); 
+        // return setErrormessage(data.message)
+        dispatch(SignInFailure(data.message))
       }
-      setLoading(false);
-      navigate('/');
+      if(res.ok){
+        dispatch(SignInSuccess(data));
+        navigate('/');
+      }
     } catch (error) {
-      setErrormessage(error.message);
-      setLoading(false);
+      // setErrormessage(error.message);
+      // setLoading(false);
+      dispatch(SignInFailure(error.message))
     }
     
   }
@@ -98,7 +105,7 @@ function Signin() {
         </div>
       </div>
        {
-         errormessage && <div className="h-10 sm:w-[46vh] w-[80vw] ml-10 sm:ml-[52vw] rounded-lg pt-2 text-white text-center  justify-center items-center bg-red-400 mt-5">
+         errormessage && <div className="h-10 sm:w-[46vh] w-[80vw]  ml-10 sm:ml-[54vw] rounded-lg pt-2 text-white text-center  justify-center items-center bg-red-400 mt-5">
           
           {errormessage}
                     
