@@ -6,6 +6,8 @@ function Signup() {
   const [formdata, setFormdata] = useState({});
   const [errormessage,setErrormessage] = useState(null);
   const [loading,setLodaing] = useState(false);
+
+
   const navigate = useNavigate();
   const handlechange = (e) => {
     setFormdata({ ...formdata, [e.target.id]: e.target.value.trim() });
@@ -102,6 +104,7 @@ function Signup() {
                     
           </div>
        }
+       
     </div>
   );
 }
