@@ -97,8 +97,8 @@ function Signup() {
           </div>
         </div>
       </div>
-       {
-         errormessage && <div className="h-10 w-[22vw] ml-[52vw] rounded-lg pt-2 text-white text-center  justify-center items-center bg-red-400 mt-5">
+      {
+         errormessage && <div className="h-10 sm:w-[46vh] w-[80vw] ml-10 sm:ml-[52vw] rounded-lg pt-2 text-white text-center  justify-center items-center bg-red-400 mt-5">
           
           {errormessage}
                     
