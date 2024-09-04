@@ -86,7 +86,7 @@ function Signin() {
               className=" text-center justify-center font-semibold text-[1vw] bg-gradient-to-r from-red-500 via-purple-500 to-pink-500"
               type="submit" disabled={loading}
             >
-              {loading ? 'loading...' : 'SignUp'}
+              {loading ? 'loading...' : 'Signin'}
             </Button>
           </form>
           <div className="flex gap-4 text-sm mt-3 ml-4">
