@@ -1,8 +1,9 @@
 import { Button, Label, TextInput } from 'flowbite-react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch ,useSelector} from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { SignInStart,SignInSuccess,SignInFailure } from '../redux/user/userSlice';
+import OAuth from '../compnents/OAuth';
 
 function Signin() {
   // const [loading,setLoading] = useState(false);
@@ -49,6 +50,7 @@ function Signin() {
     }
     
   }
+  
   return (
     <div className="min-h-screen mt-20">
       <div className="flex max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
@@ -95,6 +97,7 @@ function Signin() {
             >
               {loading ? 'loading...' : 'Signin'}
             </Button>
+            <OAuth/>
           </form>
           <div className="flex gap-4 text-sm mt-3 ml-4">
             <span className="text-1px  ">Have an account?</span>
@@ -105,7 +108,7 @@ function Signin() {
         </div>
       </div>
        {
-         errormessage && <div className="h-10 sm:w-[46vh] w-[80vw]  ml-10 sm:ml-[54vw] rounded-lg pt-2 text-white text-center  justify-center items-center bg-red-400 mt-5">
+         errormessage && <div className="h-10 sm:w-[46vh] w-[80vw]  ml-10 sm:ml-[52vw] rounded-lg pt-2 text-white text-center  justify-center items-center bg-red-400 mt-5">
           
           {errormessage}
                     

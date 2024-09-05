@@ -1,6 +1,7 @@
 import { Alert, Button, Label, TextInput } from "flowbite-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../compnents/OAuth";
 
 function Signup() {
   const [formdata, setFormdata] = useState({});
@@ -11,6 +12,7 @@ function Signup() {
   const navigate = useNavigate();
   const handlechange = (e) => {
     setFormdata({ ...formdata, [e.target.id]: e.target.value.trim() });
+    
   };
   const onhandleSubmit = async (e) => {
     e.preventDefault();
@@ -88,6 +90,7 @@ function Signup() {
             >
               {loading ? 'loading...' : 'SignUp'}
             </Button>
+            <OAuth/>
           </form>
           <div className="flex gap-4 text-sm mt-3 ml-4">
             <span className="text-1px  ">Have an account?</span>
