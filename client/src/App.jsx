@@ -8,6 +8,7 @@ import Signup from './pages/Signup'
 import Header from './compnents/Header'
 import Projects from './pages/Projects'
 import Footercomp from './compnents/Footercomp'
+import './App.css'
 
 function App() {
   return (

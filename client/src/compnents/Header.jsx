@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Button, Navbar, TextInput } from "flowbite-react";
+import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
+import {useSelector} from  'react-redux'
 
+const selectCurrentUser = (state) => state.currentuser;
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const currentuser  = useSelector(selectCurrentUser)
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -54,13 +57,32 @@ function Header() {
         >
           <FaMoon className="self-center" />
         </Button>
-        <div className="">
+        {
+          currentuser ? (
+            <Dropdown 
+            arrowIcon={false}
+            inline
+            className="h-4 w-6 bg-red-500"
+            label={
+              <Avatar 
+                alt="user"
+                img={currentuser.profilePicture}
+                rounded
+              />
+            }
+            >
+
+            </Dropdown>
+          ) : (
+            <div className="">
           <Link to="/signin">
             <button className="px-4 py-2 rounded-lg border-2 border-pink-300 hover:bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
               Sign In
             </button>
           </Link>
         </div>
+          )
+        }
 
         <Button
           className="w-12 h-10 mt-2 border-none lg:hidden"
