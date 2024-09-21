@@ -1,19 +1,27 @@
 import React, { useState } from "react";
-import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  DropdownDivider,
+  Navbar,
+  TextInput,
+} from "flowbite-react";
 import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
-import {useSelector} from  'react-redux'
+import { useSelector } from "react-redux";
 
-const selectCurrentUser = (state) => state.currentuser;
+const selectCurrentUser = (state) => state.user.currentuser;
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const currentuser  = useSelector(selectCurrentUser)
+  const currentuser = useSelector(selectCurrentUser);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  console.log(currentuser);
 
   return (
     <Navbar className="border-b-2">
@@ -50,6 +58,7 @@ function Header() {
           </li>
         </Link>
       </ul>
+
       <div className="flex gap-2 md:order-2 lg:mr-6">
         <Button
           className="w-12 h-10 hidden sm:inline items-center rounded-[40%]"
@@ -57,32 +66,36 @@ function Header() {
         >
           <FaMoon className="self-center" />
         </Button>
-        {
-          currentuser ? (
-            <Dropdown 
+        {currentuser ? (
+          <Dropdown
             arrowIcon={false}
             inline
-            className="h-4 w-6 bg-red-500"
+            className="h-40 w-40 "
             label={
-              <Avatar 
-                alt="user"
-                img={currentuser.profilePicture}
-                rounded
-              />
+              <Avatar alt="user" img={currentuser.profilePicture} rounded />
             }
-            >
-
-            </Dropdown>
-          ) : (
-            <div className="">
+          >
+            <Dropdown.Header>
+              <span className="block text-sm">@{currentuser.username}</span>
+              <span className="block truncate text-sm font-medium">
+                {currentuser.email}
+              </span>
+            </Dropdown.Header>
+            <Link to="/profile">
+              <Dropdown.Item> profile</Dropdown.Item>
+            </Link>
+            <DropdownDivider />
+            <Link to="/signup">
+              <Dropdown.Item> Sign up</Dropdown.Item>
+            </Link>
+          </Dropdown>
+        ) : (
           <Link to="/signin">
-            <button className="px-4 py-2 rounded-lg border-2 border-pink-300 hover:bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+            <button className="px-4 py-2 rounded-lg border-2 border-pink-300 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
               Sign In
             </button>
           </Link>
-        </div>
-          )
-        }
+        )}
 
         <Button
           className="w-12 h-10 mt-2 border-none lg:hidden"
