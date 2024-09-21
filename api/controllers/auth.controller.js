@@ -24,11 +24,12 @@ export const signup = async (req, res, next) => {
   });
   try {
     await newUser.save();
-    res.json("signup successfull!");
+    res.json("signup successfull!"); 
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password || email === "" || password === "") {
