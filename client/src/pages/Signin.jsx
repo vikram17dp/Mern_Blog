@@ -33,13 +33,16 @@ function Signin() {
 
       });
       const data = await res.json();
-      if(data.success == false){
+      if(data.success === false){
         // setLoading(false); 
         // return setErrormessage(data.message)
         dispatch(SignInFailure(data.message))
       }
       if(res.ok){
         dispatch(SignInSuccess(data));
+        setFormdata({})
+        
+  
         navigate('/');
       }
     } catch (error) {
