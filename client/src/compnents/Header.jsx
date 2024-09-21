@@ -9,19 +9,23 @@ import {
 } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaMoon } from "react-icons/fa";
+import { FaMoon, FaSun } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { toggleTeme } from "../redux/theme/themeSlice";
+
+
 
 const selectCurrentUser = (state) => state.user.currentuser;
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const currentuser = useSelector(selectCurrentUser);
-
+  
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  console.log(currentuser);
+const dispatch = useDispatch();  
+const {theme} = useSelector((state)=>state.theme)
 
   return (
     <Navbar className="border-b-2">
@@ -63,8 +67,10 @@ function Header() {
         <Button
           className="w-12 h-10 hidden sm:inline items-center rounded-[40%]"
           color="gray"
+          onClick={()=>dispatch(toggleTeme())}
         >
-          <FaMoon className="self-center" />
+          {theme === 'light' ?<FaMoon className="self-center"/> :<FaSun className="self-center"/>}
+       
         </Button>
         {currentuser ? (
           <Dropdown
