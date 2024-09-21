@@ -40,8 +40,8 @@ function OAuth() {
     }
   return (
     <Button
-      className="bg-transparent text-red-500 rounded-lg hover:bg-gradient-to-r from-purple-500 via-orange-600 to-purple-500
-hover:text-white hover:opacity-95 disabled:opacity-85 flex items-center justify-center "
+      className="bg-transparent  rounded-lg bg-gradient-to-r from-purple-500 via-orange-600 to-purple-500
+text-white hover:opacity-95 disabled:opacity-85 flex items-center justify-center "
       type="button"
       onClick={handlegooglechange}
     >
