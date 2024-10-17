@@ -5,8 +5,8 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const rootReducer = combineReducers({
-  user: userReducer,
-  theme:themeReducer
+  theme:themeReducer,
+  user: userReducer
 });
 
 const persistConfig = {
@@ -18,13 +18,11 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {persistedReducer,
-    theme: themeReducer,
-    user: userReducer,
-  },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),
 });
+
 
 export const persistor = persistStore(store);
 

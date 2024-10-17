@@ -1,54 +1,65 @@
 import { Button } from "flowbite-react";
 import React from "react";
 import { AiFillGoogleCircle } from "react-icons/ai";
-import {getAuth, GoogleAuthProvider, signInWithPopup} from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { app } from "../firebase";
 import { useDispatch } from "react-redux";
 import { SignInSuccess } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
-
 function OAuth() {
     const dispatch = useDispatch();
-    const navigate= useNavigate();
+    const navigate = useNavigate();
 
     const auth = getAuth(app);
-    const handlegooglechange = async()=>{
+
+    const handlegooglechange = async () => {
         const provider = new GoogleAuthProvider();
-        provider.setCustomParameters({prompt:'select_account'}); // to choose multiple account
+        provider.setCustomParameters({ prompt: 'select_account' }); 
+
         try {
-            const resultsFromGoogle = await signInWithPopup(auth,provider);
-            // console.log(resultsFromGoogle);
-            const res = await fetch('/api/auth/google',{
-                method:'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body:JSON.stringify({
-                    name:resultsFromGoogle.user.displayName,
-                    email:resultsFromGoogle.user.email,
-                    googlePhotoUrl:resultsFromGoogle.user.photoURL
-                })
-            })
-            const data = await res.json();
-            if(res.ok){
-                dispatch(SignInSuccess(data))
-                navigate('/')
-            }
+            const resultsFromGoogle = await signInWithPopup(auth, provider);
             
+            const res = await fetch('/api/auth/google', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: resultsFromGoogle.user.displayName,
+                    email: resultsFromGoogle.user.email,
+                    googlePhotoUrl: resultsFromGoogle.user.photoURL,
+                }),
+            });
+
+            // Check if the response is OK
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+
+            // Handle empty or invalid JSON response
+            const data = await res.json().catch(() => {
+                throw new Error('Invalid JSON response');
+            });
+
+            if (data) {
+                dispatch(SignInSuccess(data));
+                navigate('/');
+            }
         } catch (error) {
-            console.log(error)
+            console.log('Error during Google OAuth:', error);
         }
-    }
-  return (
-    <Button
-      className="bg-transparent  rounded-lg bg-gradient-to-r from-purple-500 via-orange-600 to-purple-500
-text-white hover:opacity-95 disabled:opacity-85 flex items-center justify-center "
-      type="button"
-      onClick={handlegooglechange}
-    >
-      <AiFillGoogleCircle className="w-6 h-6 mr-3" />
-      <p>Continue With Google</p>
-    </Button>
-  );
+    };
+
+    return (
+        <Button
+            className="bg-transparent rounded-lg bg-gradient-to-r from-purple-500 via-orange-600 to-purple-500
+            text-white hover:opacity-95 disabled:opacity-85 flex items-center justify-center"
+            type="button"
+            onClick={handlegooglechange}
+        >
+            <AiFillGoogleCircle className="w-6 h-6 mr-3" />
+            <p>Continue With Google</p>
+        </Button>
+    );
 }
 
 export default OAuth;
